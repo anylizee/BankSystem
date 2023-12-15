@@ -5,6 +5,10 @@ namespace bank;
 use bank\utils\Database;
 use bank\utils\Inventory;
 use bank\event\Handler;
+use bank\commands\BankCommand;
+
+use muqsit\invmenu\InvMenuHandler;
+use CortexPE\Commando\PacketHooker;
 
 use pocketmine\plugin\PluginBase;
 
@@ -23,6 +27,17 @@ class Core extends PluginBase {
   protected function onEnable() : void {
     $this->data();
     $this->events();
+    $this->sources();
+    $this->getServer()->getCommandMap()->register('/bank', new BankCommand($this));
+  }
+  
+  private function sources() : void {
+    if (!InvMenuHandler::isRegistered())
+            InvMenuHandler::register($this);
+
+        # Register Packets hooker
+        if (!PacketHooker::isRegistered())
+            PacketHooker::register($this);
   }
   
   public function data() : void {

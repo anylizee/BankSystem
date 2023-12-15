@@ -11,6 +11,10 @@ use pocketmine\command\CommandSender;
 
 class BankCommand extends BaseCommand {
 
+  public function __construct(Core $pl) {
+    parent::__construct('bank', 'banksystem');
+  }
+  
 	protected function prepare(): void {
 	 $this->setPermission('bank.command');
    $main = Loader::getInstance();
